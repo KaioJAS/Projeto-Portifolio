@@ -25,7 +25,7 @@ const TerraScenery = () => (
         rotate: -1500
       }}
       transition={{
-        duration: 20,
+        duration: 10,
         repeat: Infinity,
         ease: "linear"
       }}
@@ -122,7 +122,7 @@ const FogoScenery = () => (
     </defs>
 
     {/* Montanhas de fundo para profundidade */}
-    <path d="M -500 300 L -500 220 L 0 120 L 100 190 L 200 150 L 300 220 L 400 90 L 500 200 L 600 140 L 750 250 L 900 160 L 1200 200 L 1500 200 L 1500 300 Z" fill="var(--color-surface)" opacity="0.2" />
+    <path d="M -500 300 L -500 220 L 0 120 L 100 190 L 200 150 L 300 220 L 400 120 L 500 200 L 600 140 L 750 250 L 900 160 L 1200 200 L 1500 200 L 1500 300 Z" fill="var(--color-surface)" opacity="0.5" />
 
     {/* Corpo do Vulcão - Sólido e Cônico */}
     <path d="M 100 300 L 440 130 L 560 130 L 900 300 Z" fill="url(#vulcaoGrad)" />
@@ -184,54 +184,51 @@ const VentoScenery = () => {
       <path d="M -500 300 L -500 200 Q 250 100 500 220 T 1500 150 L 1500 300 Z" fill="var(--color-surface)" opacity="0.25" />
       <path d="M -500 300 L -500 260 Q 300 290 600 230 T 1500 250 L 1500 300 Z" fill="var(--color-surface)" opacity="0.9" />
 
-      <Turbine x={200} y={150} scale={1} speed={6} />
-      <Turbine x={500} y={130} scale={0.7} speed={4} />
-      <Turbine x={850} y={180} scale={1.2} speed={7} />
+      <Turbine x={200} y={165} scale={0.7} speed={6} />
+      <Turbine x={500} y={155} scale={0.5} speed={4} />
+      <Turbine x={850} y={180} scale={0.9} speed={7} />
     </svg>
   )
 }
 
 const MataScenery = () => (
   <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax slice" className="w-full h-full">
-    {/* Camadas de Fundo (Colinas Distantes) */}
-    <path d="M -500 300 L -500 200 L -200 200 Q 50 180 100 200 T 200 170 T 300 210 T 400 160 T 500 210 T 600 170 T 700 220 T 800 180 T 900 230 T 1500 180 L 1500 300 Z" fill="var(--color-surface)" opacity="0.2" />
-    <path d="M -500 300 L -500 240 L -200 240 Q 150 220 300 260 T 700 230 T 1500 250 L 1500 300 Z" fill="var(--color-surface)" opacity="0.5" />
+    {/* Camadas de Fundo (Colinas ultra distantes e muito baixas) */}
+    <path d="M -500 300 L -500 240 L -200 240 Q 50 220 100 235 T 200 210 T 300 245 T 400 200 T 500 180 T 600 215 T 700 255 T 800 220 T 900 265 T 1500 220 L 1500 300 Z" fill="var(--color-surface)" opacity="0.1" />
+    <path d="M -500 300 L -500 270 L -200 270 Q 150 255 300 280 T 700 265 T 1500 275 L 1500 300 Z" fill="var(--color-surface)" opacity="0.3" />
 
-    {/* Árvore 1 (Esquerda) */}
-    <g transform="translate(160, 100)">
-      <path d="M 30 180 Q 35 120 40 50 L 55 50 Q 60 120 65 180 Z" fill="var(--color-surface)" opacity="0.9" />
-      <g opacity="0.8">
-        <circle cx="20" cy="50" r="45" fill="var(--color-primary)" />
-        <circle cx="75" cy="45" r="50" fill="var(--color-primary)" />
-        <circle cx="48" cy="15" r="55" fill="var(--color-primary)" />
-        <circle cx="48" cy="45" r="40" fill="var(--color-accent)" opacity="0.4" />
+    {/* Árvore 1 (Fundo - Ultra Distante) */}
+    <g transform="translate(170, 210) scale(0.4)">
+      <path d="M 35 150 Q 40 100 45 40 L 60 40 Q 65 100 70 150 Z" fill="var(--color-surface)" opacity="0.7" />
+      <g opacity="0.6">
+        <circle cx="20" cy="40" r="40" fill="var(--color-primary)" />
+        <circle cx="75" cy="35" r="45" fill="var(--color-primary)" />
+        <circle cx="48" cy="10" r="50" fill="var(--color-primary)" />
       </g>
     </g>
 
-    {/* Árvore 2 (Centro) */}
-    <g transform="translate(480, 80)">
-      <path d="M 60 200 L 70 50 L 90 50 L 100 200 Z" fill="var(--color-surface)" />
-      <g>
-        <ellipse cx="40" cy="60" rx="60" ry="50" fill="var(--color-primary)" opacity="0.7" />
-        <ellipse cx="120" cy="55" rx="65" ry="55" fill="var(--color-primary)" opacity="0.8" />
-        <ellipse cx="80" cy="20" rx="75" ry="60" fill="var(--color-primary)" />
-        <circle cx="80" cy="50" r="45" fill="var(--color-accent)" opacity="0.3" />
+    {/* Árvore 2 (Centro - Distante) */}
+    <g transform="translate(550, 185) scale(0.55)">
+      <path d="M 60 180 L 70 40 L 90 40 L 100 180 Z" fill="var(--color-surface)" opacity="0.8" />
+      <g opacity="0.75">
+        <ellipse cx="40" cy="50" rx="55" ry="45" fill="var(--color-primary)" />
+        <ellipse cx="120" cy="45" rx="60" ry="50" fill="var(--color-primary)" />
+        <ellipse cx="80" cy="15" rx="70" ry="55" fill="var(--color-primary)" />
       </g>
     </g>
 
-    {/* Árvore 3 (Direita) */}
-    <g transform="translate(800, 140)">
-      <path d="M 45 140 Q 50 100 50 30 L 65 30 Q 65 100 70 140 Z" fill="var(--color-surface)" opacity="0.9" />
-      <g>
-        <circle cx="25" cy="40" r="40" fill="var(--color-primary)" opacity="0.6" />
-        <circle cx="90" cy="35" r="45" fill="var(--color-primary)" opacity="0.7" />
-        <circle cx="58" cy="10" r="50" fill="var(--color-primary)" />
-        <circle cx="58" cy="40" r="30" fill="var(--color-accent)" opacity="0.4" />
+    {/* Árvore 3 (Direita - Distante) */}
+    <g transform="translate(820, 185) scale(0.5)">
+      <path d="M 45 160 Q 50 90 50 25 L 65 25 Q 65 90 70 160 Z" fill="var(--color-surface)" opacity="0.8" />
+      <g opacity="0.7">
+        <circle cx="25" cy="35" r="35" fill="var(--color-primary)" />
+        <circle cx="90" cy="30" r="40" fill="var(--color-primary)" />
+        <circle cx="58" cy="8" r="45" fill="var(--color-primary)" />
       </g>
     </g>
 
     {/* Chão de Primeiro Plano */}
-    <path d="M 0 300 Q 500 270 1000 300 L 1000 300 L 0 300 Z" fill="var(--color-background)" opacity="0.9" />
+    <path d="M 0 300 Q 500 292 1000 300 L 1000 300 L 0 300 Z" fill="var(--color-background)" />
   </svg>
 
 )

@@ -6,27 +6,28 @@ import { GlassShield } from '@/canvas/GlassShield'
 const socialLinks = [
   {
     name: 'GitHub',
-    icon: '🐙',
-    url: 'https://github.com/kaiojas',
+    icon: 'pi pi-github',
+    url: 'https://github.com/KaioJAS',
     description: 'Meus repositórios e contribuições',
   },
   {
     name: 'LinkedIn',
-    icon: '💼',
-    url: 'https://linkedin.com/in/kaiojas',
-    description: 'Perfil profissional',
+    icon: 'pi pi-linkedin',
+    url: 'https://www.linkedin.com/in/kaio-jarbson-araujo-de-souza',
+    description: 'Perfil profissional completo',
   },
   {
     name: 'Email',
-    icon: '📧',
-    url: 'mailto:contato@kaiojas.dev',
-    description: 'Mande uma mensagem',
+    icon: 'pi pi-envelope',
+    url: '#',
+    copyText: 'kaiojas1@gmail.com',
+    description: 'kaiojas1@gmail.com (clique p/ copiar)',
   },
   {
     name: 'WhatsApp',
-    icon: '💬',
-    url: 'https://wa.me/5500000000000',
-    description: 'Vamos conversar!',
+    icon: 'pi pi-whatsapp',
+    url: 'https://wa.me/5544998115241',
+    description: '(44) 99811-5241',
   },
 ]
 
@@ -57,16 +58,23 @@ export function ContactSection() {
             <motion.a
               key={link.name}
               href={link.url}
-              target="_blank"
+              target={link.url === '#' ? undefined : "_blank"}
               rel="noopener noreferrer"
               className="contact-card"
+              onClick={(e) => {
+                if ('copyText' in link) {
+                  e.preventDefault()
+                  navigator.clipboard.writeText(link.copyText as string)
+                  alert('Copiado para a área de transferência: ' + link.copyText)
+                }
+              }}
               initial={{ opacity: 0, y: 40, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               whileHover={{ y: -8, scale: 1.03 }}
             >
-              <span className="contact-icon">{link.icon}</span>
+              <i className={`contact-icon ${link.icon}`}></i>
               <h3 className="contact-name">{link.name}</h3>
               <p className="contact-desc">{link.description}</p>
             </motion.a>

@@ -3,36 +3,35 @@ import { GlassShield } from '@/canvas/GlassShield'
 
 const skillCategories = [
   {
-    title: 'Frontend',
-    icon: '🎨',
+    title: 'Frontend & UI',
+    icon: 'pi pi-palette',
     skills: [
-      { name: 'React / Next.js', level: 90 },
-      { name: 'Vue.js / Nuxt', level: 85 },
-      { name: 'TypeScript', level: 88 },
-      { name: 'Three.js / WebGL', level: 70 },
-      { name: 'Tailwind CSS', level: 92 },
+      { name: 'Vue.js (v2 e v3)', level: 95 },
+      { name: 'JavaScript', level: 90 },
+      { name: 'TypeScript', level: 85 },
+      { name: 'Tailwind CSS / CSS3', level: 88 },
+      { name: 'React', level: 70 },
     ],
   },
   {
     title: 'Backend',
-    icon: '⚙️',
+    icon: 'pi pi-server',
     skills: [
-      { name: 'Laravel / PHP', level: 88 },
-      { name: 'Node.js', level: 82 },
-      { name: 'Python', level: 75 },
-      { name: 'REST / GraphQL', level: 85 },
-      { name: 'WebSockets', level: 78 },
+      { name: 'PHP / Laravel', level: 98 },
+      { name: 'Arquitetura MVC / SaaS', level: 90 },
+      { name: 'REST APIs', level: 92 },
+      { name: 'Jobs, Queues & Events', level: 88 },
+      { name: 'Node.js', level: 75 },
     ],
   },
   {
-    title: 'DevOps & Tools',
-    icon: '🐳',
+    title: 'Infra & DB',
+    icon: 'pi pi-database',
     skills: [
+      { name: 'MySQL / Modelagem', level: 92 },
       { name: 'Docker / Compose', level: 85 },
-      { name: 'Git / CI/CD', level: 88 },
-      { name: 'MySQL / PostgreSQL', level: 82 },
-      { name: 'Redis', level: 80 },
-      { name: 'Linux', level: 78 },
+      { name: 'Git / Versionamento', level: 90 },
+      { name: 'Linux', level: 80 },
     ],
   },
 ]
@@ -66,7 +65,7 @@ export function SkillsSection() {
               transition={{ duration: 0.6, delay: catIdx * 0.15 }}
             >
               <div className="skill-card-header">
-                <span className="skill-card-icon">{category.icon}</span>
+                <i className={`skill-card-icon ${category.icon}`}></i>
                 <h3>{category.title}</h3>
               </div>
               <div className="skill-list">

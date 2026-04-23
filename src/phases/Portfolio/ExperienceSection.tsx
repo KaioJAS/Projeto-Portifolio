@@ -3,31 +3,31 @@ import { GlassShield } from '@/canvas/GlassShield'
 
 const experiences = [
   {
-    company: 'Projeto PontIA',
-    role: 'Full Stack Developer',
-    period: '2024 — Presente',
+    company: 'Runyme',
+    role: 'Desenvolvedor Full Stack',
+    period: '02/2023 — Presente',
     description:
-      'Plataforma de atendimento automatizado via WhatsApp com IA generativa. Stack: Laravel 13, Vue 3, Redis, Docker.',
-    tech: ['Laravel', 'Vue.js', 'Redis', 'Docker', 'WhatsApp API'],
-    emoji: '🤖',
+      'Desenvolvimento e evolução de plataforma SaaS contábil utilizando Laravel e Vue.js. Implementação de simulador de regimes tributários, otimização de performance e colaboração na modelagem de soluções escaláveis e orientadas a negócio.',
+    tech: ['Laravel', 'Vue.js', 'PHP', 'JavaScript', 'SaaS'],
+    emoji: 'pi pi-building',
   },
   {
-    company: 'Freelancer',
+    company: 'Certik Web',
+    role: 'Desenvolvedor Full Stack',
+    period: '09/2022 — 05/2023',
+    description:
+      'Implementação de funcionalidades e melhorias estruturais para sistemas web com Laravel e Vue.js. Refatoração de escopos visando desempenho, e integração entre frontend e backend comunicando via APIs.',
+    tech: ['PHP', 'Laravel', 'Vue.js', 'APIs'],
+    emoji: 'pi pi-code',
+  },
+  {
+    company: 'H3X',
     role: 'Desenvolvedor Web',
-    period: '2023 — Presente',
+    period: '03/2022 — 08/2022',
     description:
-      'Desenvolvimento de soluções web completas para clientes diversos, desde landing pages até sistemas complexos.',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-    emoji: '💻',
-  },
-  {
-    company: 'Projetos Pessoais',
-    role: 'Creator & Developer',
-    period: '2022 — Presente',
-    description:
-      'Experimentação contínua com novas tecnologias: WebGL, Three.js, integrações de API, automações.',
-    tech: ['Three.js', 'TypeScript', 'Python', 'Docker'],
-    emoji: '🚀',
+      'Desenvolvimento de sites institucionais, e-commerces e sistemas web personalizados. Foco em arquitetura MVC e suporte técnico de projetos existentes.',
+    tech: ['PHP', 'CodeIgniter', 'HTML/CSS', 'JavaScript'],
+    emoji: 'pi pi-desktop',
   },
 ]
 
@@ -61,7 +61,7 @@ export function ExperienceSection() {
               transition={{ duration: 0.7, delay: index * 0.15 }}
             >
               <div className="timeline-dot">
-                <span>{exp.emoji}</span>
+                <i className={exp.emoji}></i>
               </div>
               <div className="card-content">
                 <div className="card-header">

@@ -50,7 +50,7 @@ export function SplashScreen() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1.0, type: 'spring', damping: 15 }}
         >
-          Kaio Jaspers
+          Kaio Jarbson
         </motion.h1>
 
         {/* Subtitle */}
