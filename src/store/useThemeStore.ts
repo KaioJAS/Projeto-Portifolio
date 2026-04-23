@@ -14,8 +14,8 @@ interface ThemeState {
 
 export const useThemeStore = create<ThemeState>()((set) => ({
   phase: 'splash',
-  theme: themes['vento'],
-  element: 'vento',
+  theme: themes['parallax'],
+  element: 'parallax',
 
   setTheme: (theme) => set({ theme }),
 

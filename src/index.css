@@ -193,10 +193,10 @@ button {
 }
 
 .splash-element-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
   gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: min(100%, 760px);
 }
 
 .splash-element-btn {
@@ -210,7 +210,8 @@ button {
   border: 2px solid rgba(255, 255, 255, 0.06);
   transition: all 0.3s var(--ease-out);
   position: relative;
-  min-width: 72px;
+  width: 100%;
+  min-width: 0;
 }
 
 .splash-element-btn:hover {
@@ -367,12 +368,30 @@ button {
   z-index: 2;
 }
 
+.parallax-showcase-bg__base {
+  background-size: cover;
+}
+
 .parallax-showcase-bg {
   position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
+}
+
+.parallax-showcase-bg--touch .parallax-showcase-bg__beam {
+  opacity: 0.18;
+}
+
+.parallax-showcase-bg--touch .parallax-showcase-panel {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.parallax-showcase-bg--compact .parallax-showcase-bg__beam {
+  filter: blur(38px);
+  opacity: 0.16;
 }
 
 .parallax-showcase-bg__filters {
@@ -443,41 +462,41 @@ button {
 .parallax-showcase-bg__blob--one {
   top: 10%;
   left: 10%;
-  width: 26rem;
-  height: 26rem;
+  width: clamp(16rem, 26vw, 26rem);
+  height: clamp(16rem, 26vw, 26rem);
   background: radial-gradient(circle at 35% 32%, rgba(255, 255, 255, 0.85), rgba(125, 249, 255, 0.48) 24%, rgba(125, 249, 255, 0.04) 68%);
 }
 
 .parallax-showcase-bg__blob--two {
   top: 20%;
   right: 12%;
-  width: 22rem;
-  height: 22rem;
+  width: clamp(14rem, 22vw, 22rem);
+  height: clamp(14rem, 22vw, 22rem);
   background: radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.78), rgba(255, 122, 217, 0.46) 28%, rgba(255, 122, 217, 0.04) 70%);
 }
 
 .parallax-showcase-bg__blob--three {
   bottom: 8%;
   left: 22%;
-  width: 20rem;
-  height: 20rem;
+  width: clamp(12rem, 20vw, 20rem);
+  height: clamp(12rem, 20vw, 20rem);
   background: radial-gradient(circle at 38% 38%, rgba(255, 255, 255, 0.68), rgba(127, 147, 255, 0.4) 26%, rgba(127, 147, 255, 0.04) 70%);
 }
 
 .parallax-showcase-bg__blob--four {
   bottom: 12%;
   right: 18%;
-  width: 18rem;
-  height: 18rem;
+  width: clamp(11rem, 18vw, 18rem);
+  height: clamp(11rem, 18vw, 18rem);
   background: radial-gradient(circle at 40% 36%, rgba(255, 255, 255, 0.76), rgba(96, 241, 201, 0.36) 26%, rgba(96, 241, 201, 0.04) 70%);
 }
 
 .parallax-showcase-bg__blob--pointer {
   top: 50%;
   left: 50%;
-  width: 26rem;
-  height: 26rem;
-  margin: -13rem 0 0 -13rem;
+  width: clamp(16rem, 26vw, 26rem);
+  height: clamp(16rem, 26vw, 26rem);
+  margin: calc(clamp(16rem, 26vw, 26rem) / -2) 0 0 calc(clamp(16rem, 26vw, 26rem) / -2);
   background: radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.92), rgba(125, 249, 255, 0.48) 26%, rgba(255, 122, 217, 0.08) 56%, rgba(125, 249, 255, 0) 74%);
   opacity: 0.84;
 }
@@ -503,9 +522,10 @@ button {
 }
 
 .parallax-showcase-bg__ring--outer {
-  width: 34rem;
-  height: 34rem;
-  margin: -17rem 0 0 -17rem;
+  --ring-outer-size: clamp(20rem, 34vw, 34rem);
+  width: var(--ring-outer-size);
+  height: var(--ring-outer-size);
+  margin: calc(var(--ring-outer-size) / -2) 0 0 calc(var(--ring-outer-size) / -2);
   border: 1px solid rgba(125, 249, 255, 0.16);
   box-shadow:
     inset 0 0 40px rgba(125, 249, 255, 0.05),
@@ -513,9 +533,10 @@ button {
 }
 
 .parallax-showcase-bg__ring--inner {
-  width: 18rem;
-  height: 18rem;
-  margin: -9rem 0 0 -9rem;
+  --ring-inner-size: clamp(11rem, 18vw, 18rem);
+  width: var(--ring-inner-size);
+  height: var(--ring-inner-size);
+  margin: calc(var(--ring-inner-size) / -2) 0 0 calc(var(--ring-inner-size) / -2);
   border: 1px solid rgba(255, 122, 217, 0.18);
   box-shadow:
     inset 0 0 32px rgba(255, 122, 217, 0.06),
@@ -540,6 +561,7 @@ button {
   -webkit-backdrop-filter: blur(22px);
   overflow: hidden;
   will-change: transform;
+  max-width: calc(100vw - 2rem);
 }
 
 .parallax-showcase-panel::before {
@@ -553,27 +575,27 @@ button {
 }
 
 .parallax-showcase-panel--alpha {
-  top: 12%;
-  left: 8%;
-  width: 22rem;
+  top: clamp(5rem, 12vh, 8rem);
+  left: clamp(1rem, 6vw, 5rem);
+  width: clamp(13rem, 26vw, 22rem);
 }
 
 .parallax-showcase-panel--beta {
-  top: 18%;
-  right: 7%;
-  width: 20rem;
+  top: clamp(7rem, 18vh, 12rem);
+  right: clamp(1rem, 6vw, 4.5rem);
+  width: clamp(12rem, 24vw, 20rem);
 }
 
 .parallax-showcase-panel--gamma {
-  bottom: 14%;
-  left: 14%;
-  width: 18rem;
+  bottom: clamp(4rem, 14vh, 8rem);
+  left: clamp(1rem, 12vw, 8rem);
+  width: clamp(11rem, 22vw, 18rem);
 }
 
 .parallax-showcase-panel--delta {
-  right: 18%;
-  bottom: 18%;
-  width: 14rem;
+  right: clamp(1rem, 14vw, 11rem);
+  bottom: clamp(5rem, 18vh, 10rem);
+  width: clamp(10rem, 16vw, 14rem);
 }
 
 .parallax-showcase-panel__eyebrow {
@@ -702,7 +724,7 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 80px 24px;
+  padding: clamp(88px, 10vw, 120px) clamp(16px, 4vw, 24px);
   position: relative;
 }
 
@@ -795,6 +817,7 @@ button {
   gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
+  width: min(100%, 520px);
 }
 
 .hero-cta {
@@ -1023,6 +1046,10 @@ button {
   color: var(--experience-accent);
   background: rgba(var(--experience-accent-rgb), 0.1);
   border: 1px solid rgba(var(--experience-accent-rgb), 0.22);
+}
+
+.experience-parallax-card--compact .experience-floating-pills {
+  display: none;
 }
 
 .experience-parallax-card__visual {
@@ -1711,7 +1738,7 @@ button {
    ============================================================ */
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
   max-width: 700px;
   margin: 0 auto;
@@ -1775,6 +1802,7 @@ button {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  width: min(100%, 420px);
 }
 
 .atmosphere-btn {
@@ -1847,6 +1875,7 @@ button {
   color: var(--color-text);
   transition: all 0.3s var(--ease-out);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: calc(100vw - 48px);
 }
 
 .back-to-splash-btn:hover {
@@ -1897,24 +1926,28 @@ button {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1024px) {
+  .parallax-showcase-bg--tablet .parallax-showcase-panel {
+    padding: 18px;
+  }
+
   .parallax-showcase-panel--alpha {
-    left: 4%;
-    width: 18rem;
+    left: 1.25rem;
+    width: min(17rem, calc(100vw - 2rem));
   }
 
   .parallax-showcase-panel--beta {
-    right: 4%;
-    width: 17rem;
+    right: 1.25rem;
+    width: min(16rem, calc(100vw - 2rem));
   }
 
   .parallax-showcase-panel--gamma {
-    left: 8%;
-    width: 16rem;
+    left: 2rem;
+    width: min(15rem, calc(100vw - 2rem));
   }
 
   .parallax-showcase-panel--delta {
-    right: 10%;
-    width: 12rem;
+    right: 2rem;
+    width: min(11rem, calc(100vw - 2rem));
   }
 }
 
@@ -1924,13 +1957,18 @@ button {
     border-radius: 18px;
   }
 
+  .section {
+    min-height: auto;
+    padding: 96px 16px 72px;
+  }
+
   .splash-element-grid {
     gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
   }
 
   .splash-element-btn {
     padding: 10px 12px;
-    min-width: 60px;
   }
 
   .splash-element-emoji {
@@ -1944,6 +1982,23 @@ button {
 
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-description {
+    text-align: left !important;
+    font-size: 0.98rem !important;
+    line-height: 1.7 !important;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 360px;
+  }
+
+  .hero-cta {
+    width: 100%;
+    justify-content: center;
   }
 
   .parallax-showcase-bg__grid {
@@ -1974,22 +2029,26 @@ button {
     border-radius: 22px;
   }
 
+  .parallax-showcase-bg--compact .parallax-showcase-panel--delta {
+    display: none;
+  }
+
   .parallax-showcase-panel--alpha {
-    top: 10%;
-    left: -2%;
-    width: 15rem;
+    top: 5.5rem;
+    left: 0.75rem;
+    width: min(14rem, calc(100vw - 1.5rem));
   }
 
   .parallax-showcase-panel--beta {
-    top: 20%;
-    right: -4%;
-    width: 14rem;
+    top: 9.5rem;
+    right: 0.75rem;
+    width: min(13rem, calc(100vw - 1.5rem));
   }
 
   .parallax-showcase-panel--gamma {
-    bottom: 12%;
-    left: -2%;
-    width: 13.5rem;
+    bottom: 7rem;
+    left: 0.75rem;
+    width: min(12rem, calc(100vw - 1.5rem));
   }
 
   .parallax-showcase-panel--delta {
@@ -2046,6 +2105,13 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .back-to-splash-btn {
+    top: 16px;
+    left: 16px;
+    padding: 9px 16px;
+    font-size: 0.82rem;
+  }
+
   .portfolio-nav {
     display: none;
   }
@@ -2054,11 +2120,11 @@ button {
 @media (max-width: 480px) {
   .splash-element-grid {
     gap: 6px;
+    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
   }
 
   .splash-element-btn {
     padding: 8px 10px;
-    min-width: 52px;
   }
 
   .contact-grid {
@@ -2115,21 +2181,19 @@ button {
   }
 
   .parallax-showcase-panel--alpha {
-    top: 10%;
-    left: -10%;
-    width: 12rem;
+    top: 5rem;
+    left: 0.5rem;
+    width: min(11rem, calc(100vw - 1rem));
   }
 
   .parallax-showcase-panel--beta {
-    top: 24%;
-    right: -10%;
-    width: 11rem;
+    top: 11.5rem;
+    right: 0.5rem;
+    width: min(10rem, calc(100vw - 1rem));
   }
 
   .parallax-showcase-panel--gamma {
-    bottom: 14%;
-    left: -8%;
-    width: 11rem;
+    display: none;
   }
 
   .experience-parallax-card {
@@ -2187,5 +2251,10 @@ button {
   .experience-skyline {
     gap: 10px;
     padding-inline: 18px;
+  }
+
+  .back-to-splash-btn {
+    top: 12px;
+    left: 12px;
   }
 }

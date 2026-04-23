@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
 import {
   motion,
@@ -58,12 +59,21 @@ interface ParallaxLayerProps {
 export function ExperienceParallaxCard({ experience, index }: ExperienceParallaxCardProps) {
   const prefersReducedMotion = useReducedMotion()
   const reducedMotion = Boolean(prefersReducedMotion)
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window === 'undefined' ? 1440 : window.innerWidth,
+    hasFinePointer:
+      typeof window === 'undefined'
+        ? true
+        : window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+  }))
   const rawPointerX = useMotionValue(0)
   const rawPointerY = useMotionValue(0)
   const pointerX = useSpring(rawPointerX, { stiffness: 170, damping: 22, mass: 0.45 })
   const pointerY = useSpring(rawPointerY, { stiffness: 170, damping: 22, mass: 0.45 })
-  const rotateX = useTransform(pointerY, [-0.5, 0.5], reducedMotion ? [0, 0] : [10, -10])
-  const rotateY = useTransform(pointerX, [-0.5, 0.5], reducedMotion ? [0, 0] : [-12, 12])
+  const canInteract = !reducedMotion && viewport.hasFinePointer && viewport.width >= 900
+  const isCompact = viewport.width < 700
+  const rotateX = useTransform(pointerY, [-0.5, 0.5], canInteract ? [10, -10] : [0, 0])
+  const rotateY = useTransform(pointerX, [-0.5, 0.5], canInteract ? [-12, 12] : [0, 0])
   const spotlightX = useTransform(pointerX, [-0.5, 0.5], [18, 82])
   const spotlightY = useTransform(pointerY, [-0.5, 0.5], [18, 82])
   const spotlight = useMotionTemplate`radial-gradient(circle at ${spotlightX}% ${spotlightY}%, rgba(${experience.accentRgb}, 0.38), transparent 56%)`
@@ -73,8 +83,24 @@ export function ExperienceParallaxCard({ experience, index }: ExperienceParallax
     '--experience-secondary': experience.secondary,
   } as CSSProperties
 
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({
+        width: window.innerWidth,
+        hasFinePointer: window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+      })
+    }
+
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+
+    return () => {
+      window.removeEventListener('resize', updateViewport)
+    }
+  }, [])
+
   function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (reducedMotion) return
+    if (!canInteract) return
 
     const rect = event.currentTarget.getBoundingClientRect()
     const nextX = (event.clientX - rect.left) / rect.width - 0.5
@@ -91,7 +117,7 @@ export function ExperienceParallaxCard({ experience, index }: ExperienceParallax
 
   return (
     <motion.article
-      className={`experience-parallax-card ${index % 2 === 1 ? 'experience-parallax-card--reverse' : ''}`}
+      className={`experience-parallax-card ${index % 2 === 1 ? 'experience-parallax-card--reverse' : ''} ${isCompact ? 'experience-parallax-card--compact' : ''} ${!canInteract ? 'experience-parallax-card--static' : ''}`}
       style={cardStyle}
       initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 56 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -136,11 +162,11 @@ export function ExperienceParallaxCard({ experience, index }: ExperienceParallax
         <div className="experience-parallax-card__visual">
           <motion.div
             className={`experience-parallax-stage experience-parallax-stage--${experience.scene}`}
-            style={reducedMotion ? undefined : { rotateX, rotateY }}
-            onPointerMove={handlePointerMove}
-            onPointerLeave={resetPointer}
-            onPointerCancel={resetPointer}
-            whileHover={reducedMotion ? undefined : { scale: 1.015 }}
+            style={canInteract ? { rotateX, rotateY } : undefined}
+            onPointerMove={canInteract ? handlePointerMove : undefined}
+            onPointerLeave={canInteract ? resetPointer : undefined}
+            onPointerCancel={canInteract ? resetPointer : undefined}
+            whileHover={canInteract ? { scale: 1.015 } : undefined}
             transition={{ type: 'spring', stiffness: 220, damping: 20 }}
             aria-hidden="true"
           >

@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/useThemeStore'
 import type { Element } from '@/theme/types'
 
 export function SplashScreen() {
-  const [selectedElement, setSelectedElement] = useState<Element>('vento')
+  const [selectedElement, setSelectedElement] = useState<Element>('parallax')
   const enterPortfolio = useThemeStore((s) => s.enterPortfolio)
   const [isExiting, setIsExiting] = useState(false)
 

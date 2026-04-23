@@ -1,4 +1,4 @@
-import { useEffect, useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import {
   motion,
@@ -51,6 +51,13 @@ function PointerLayer({
 export function ParallaxShowcaseBackground() {
   const prefersReducedMotion = useReducedMotion()
   const reducedMotion = Boolean(prefersReducedMotion)
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window === 'undefined' ? 1440 : window.innerWidth,
+    hasFinePointer:
+      typeof window === 'undefined'
+        ? true
+        : window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+  }))
   const rawPointerX = useMotionValue(0.5)
   const rawPointerY = useMotionValue(0.5)
   const pointerX = useSpring(rawPointerX, { stiffness: 120, damping: 24, mass: 0.6 })
@@ -58,6 +65,16 @@ export function ParallaxShowcaseBackground() {
   const { scrollYProgress } = useScroll()
   const filterSeed = useId().replace(/:/g, '')
   const gooFilterId = `parallax-goo-${filterSeed}`
+  const isCompact = viewport.width < 700
+  const isTablet = viewport.width < 1100
+  const canTrackPointer = !reducedMotion && viewport.hasFinePointer
+  const motionScale = isCompact ? 0.34 : isTablet ? 0.62 : 1
+  const fluidTravelX = 520 * motionScale
+  const fluidTravelY = 340 * motionScale
+  const ringTravelX = 440 * motionScale
+  const ringTravelY = 260 * motionScale
+  const gridTravelX = 44 * motionScale
+  const gridTravelY = 30 * motionScale
 
   const primaryGlowX = useTransform(pointerX, [0, 1], [16, 84])
   const primaryGlowY = useTransform(pointerY, [0, 1], [12, 88])
@@ -69,19 +86,35 @@ export function ParallaxShowcaseBackground() {
     linear-gradient(180deg, rgba(2, 8, 20, 0.98) 0%, rgba(4, 12, 25, 0.94) 48%, rgba(2, 6, 16, 0.99) 100%)
   `
 
-  const fluidShiftX = useTransform(pointerX, [0, 1], [-520, 520])
-  const fluidShiftY = useTransform(pointerY, [0, 1], [-340, 340])
-  const ringShiftX = useTransform(pointerX, [0, 1], [-440, 440])
-  const ringShiftY = useTransform(pointerY, [0, 1], [-260, 260])
-  const gridShiftX = useTransform(pointerX, [0, 1], [-44, 44])
-  const gridShiftY = useTransform(pointerY, [0, 1], [-30, 30])
-  const driftSlow = useTransform(scrollYProgress, [0, 1], [0, -120])
-  const driftMedium = useTransform(scrollYProgress, [0, 1], [0, -180])
-  const driftFast = useTransform(scrollYProgress, [0, 1], [0, -240])
-  const driftReverse = useTransform(scrollYProgress, [0, 1], [0, 160])
+  const fluidShiftX = useTransform(pointerX, [0, 1], [-fluidTravelX, fluidTravelX])
+  const fluidShiftY = useTransform(pointerY, [0, 1], [-fluidTravelY, fluidTravelY])
+  const ringShiftX = useTransform(pointerX, [0, 1], [-ringTravelX, ringTravelX])
+  const ringShiftY = useTransform(pointerY, [0, 1], [-ringTravelY, ringTravelY])
+  const gridShiftX = useTransform(pointerX, [0, 1], [-gridTravelX, gridTravelX])
+  const gridShiftY = useTransform(pointerY, [0, 1], [-gridTravelY, gridTravelY])
+  const driftSlow = useTransform(scrollYProgress, [0, 1], [0, -120 * motionScale])
+  const driftMedium = useTransform(scrollYProgress, [0, 1], [0, -180 * motionScale])
+  const driftFast = useTransform(scrollYProgress, [0, 1], [0, -240 * motionScale])
+  const driftReverse = useTransform(scrollYProgress, [0, 1], [0, 160 * motionScale])
 
   useEffect(() => {
-    if (reducedMotion) return
+    const updateViewport = () => {
+      setViewport({
+        width: window.innerWidth,
+        hasFinePointer: window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+      })
+    }
+
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+
+    return () => {
+      window.removeEventListener('resize', updateViewport)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!canTrackPointer) return
 
     const updatePointer = (event: PointerEvent) => {
       rawPointerX.set(event.clientX / window.innerWidth)
@@ -102,10 +135,19 @@ export function ParallaxShowcaseBackground() {
       window.removeEventListener('pointerleave', resetPointer)
       window.removeEventListener('blur', resetPointer)
     }
-  }, [rawPointerX, rawPointerY, reducedMotion])
+  }, [canTrackPointer, rawPointerX, rawPointerY])
+
+  const rootClassName = [
+    'parallax-showcase-bg',
+    isTablet ? 'parallax-showcase-bg--tablet' : '',
+    isCompact ? 'parallax-showcase-bg--compact' : '',
+    !viewport.hasFinePointer ? 'parallax-showcase-bg--touch' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
-    <div className="parallax-showcase-bg" aria-hidden="true">
+    <div className={rootClassName} aria-hidden="true">
       <svg className="parallax-showcase-bg__filters" width="0" height="0" focusable="false">
         <defs>
           <filter id={gooFilterId}>
@@ -172,7 +214,17 @@ export function ParallaxShowcaseBackground() {
         />
         <motion.div
           className="parallax-showcase-bg__blob parallax-showcase-bg__blob--pointer"
-          style={{ x: fluidShiftX, y: fluidShiftY }}
+          style={canTrackPointer ? { x: fluidShiftX, y: fluidShiftY } : undefined}
+          animate={
+            canTrackPointer || reducedMotion
+              ? undefined
+              : { x: [0, 28, -24, 0], y: [0, -18, 22, 0], scale: [1, 1.06, 0.95, 1] }
+          }
+          transition={
+            canTrackPointer || reducedMotion
+              ? undefined
+              : { duration: 18, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
       </motion.div>
 
