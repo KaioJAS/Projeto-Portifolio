@@ -6,6 +6,7 @@ import { useThemeStore } from '@/store/useThemeStore'
 import { useSmoothScroll } from '@/hooks/useSmoothScroll'
 import { motion } from 'framer-motion'
 import { WeatherCanvas } from '@/canvas/WeatherCanvas'
+import { EnvironmentScenery } from '@/canvas/EnvironmentScenery'
 
 export function Portfolio() {
   const theme = useThemeStore((s) => s.theme)
@@ -20,6 +21,9 @@ export function Portfolio() {
       transition={{ duration: 1 }}
       style={{ background: theme?.palette.background }}
     >
+      {/* Landscape Ground Elements */}
+      <EnvironmentScenery element={element} />
+
       {/* Particle background */}
       <WeatherCanvas element={element} />
 
