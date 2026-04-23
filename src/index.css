@@ -822,8 +822,45 @@ button {
 }
 
 /* ============================================================
-   PORTFOLIO NAV
+   PORTFOLIO NAV & FLOATING CONTROLS
    ============================================================ */
+.back-to-splash-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(10, 10, 26, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  transition: all 0.3s var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-splash-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  color: var(--color-primary);
+}
+
+.back-icon {
+  font-size: 1.1rem;
+  transition: transform 0.3s;
+}
+
+.back-to-splash-btn:hover .back-icon {
+  transform: translateX(-4px);
+}
+
 .portfolio-nav {
   position: fixed;
   right: 24px;
