@@ -113,4 +113,19 @@ export const themes: Record<string, Theme> = {
     },
     'Transcendente, épico, silencioso',
   ),
+
+  parallax: createTheme(
+    'parallax',
+    'Paralax Lab',
+    {
+      primary: '#7df9ff',
+      secondary: '#13203e',
+      accent: '#ff7ad9',
+      background: '#020814',
+      surface: '#111d35',
+      text: '#f4fbff',
+      textMuted: '#89a7c7',
+    },
+    'Fluido, profundo, interativo',
+  ),
 }

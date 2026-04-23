@@ -310,6 +310,8 @@ const LuzScenery = () => (
 
 )
 
+const ParallaxScenery = () => null
+
 const SCENERY_MAP: Record<Element, React.FC> = {
   terra: TerraScenery,
   agua: AguaScenery,
@@ -317,6 +319,7 @@ const SCENERY_MAP: Record<Element, React.FC> = {
   vento: VentoScenery,
   mata: MataScenery,
   luz: LuzScenery,
+  parallax: ParallaxScenery,
 }
 
 export function EnvironmentScenery({ element }: Props) {

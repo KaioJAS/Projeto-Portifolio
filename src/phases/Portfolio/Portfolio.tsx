@@ -8,31 +8,39 @@ import { useActiveSection } from '@/hooks/useActiveSection'
 import { motion } from 'framer-motion'
 import { WeatherCanvas } from '@/canvas/WeatherCanvas'
 import { EnvironmentScenery } from '@/canvas/EnvironmentScenery'
+import { ParallaxShowcaseBackground } from '@/canvas/ParallaxShowcaseBackground'
 
 export function Portfolio() {
   const theme = useThemeStore((s) => s.theme)
   const element = useThemeStore((s) => s.element)
   const setPhase = useThemeStore((s) => s.setPhase)
   const activeSection = useActiveSection(['hero', 'experience', 'skills', 'contact'], 0.5)
+  const isParallaxMode = element === 'parallax'
   
   useSmoothScroll()
 
   return (
     <motion.div
-      className="portfolio"
+      className={`portfolio ${isParallaxMode ? 'portfolio--parallax' : ''}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
       style={{ background: theme?.palette.background }}
     >
-      {/* Landscape Ground Elements */}
-      <EnvironmentScenery element={element} />
+      {isParallaxMode ? (
+        <ParallaxShowcaseBackground />
+      ) : (
+        <>
+          {/* Landscape Ground Elements */}
+          <EnvironmentScenery element={element} />
 
-      {/* Particle background */}
-      <WeatherCanvas element={element} />
+          {/* Particle background */}
+          <WeatherCanvas element={element} />
+        </>
+      )}
 
       {/* Dark overlay for readability */}
-      <div className="portfolio-overlay" />
+      <div className={`portfolio-overlay ${isParallaxMode ? 'portfolio-overlay--parallax' : ''}`} />
 
       {/* Back to Splash Button */}
       <button 
@@ -61,4 +69,3 @@ export function Portfolio() {
     </motion.div>
   )
 }
-

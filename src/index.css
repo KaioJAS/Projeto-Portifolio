@@ -236,6 +236,7 @@ button {
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap;
   position: relative;
   z-index: 1;
 }
@@ -329,6 +330,10 @@ button {
   transition: background 0.5s;
 }
 
+.portfolio--parallax {
+  isolation: isolate;
+}
+
 .portfolio-overlay {
   position: fixed;
   inset: 0;
@@ -337,9 +342,358 @@ button {
   pointer-events: none;
 }
 
+.portfolio-overlay--parallax {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(125, 249, 255, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(2, 6, 16, 0.12) 0%, rgba(2, 6, 16, 0.34) 45%, rgba(2, 6, 16, 0.5) 100%);
+  z-index: 1;
+}
+
+.portfolio--parallax .glass-shield {
+  background: rgba(7, 13, 28, 0.5);
+  border-color: rgba(125, 249, 255, 0.12);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(255, 122, 217, 0.04);
+}
+
+.portfolio--parallax .glass-shield::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(125, 249, 255, 0.24) 32%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 122, 217, 0.2) 68%, transparent 100%);
+}
+
 .portfolio-content {
   position: relative;
   z-index: 2;
+}
+
+.parallax-showcase-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.parallax-showcase-bg__filters {
+  position: absolute;
+}
+
+.parallax-showcase-bg__base,
+.parallax-showcase-bg__grid,
+.parallax-showcase-bg__beam,
+.parallax-showcase-bg__goo,
+.parallax-showcase-bg__noise,
+.parallax-showcase-bg__ring,
+.parallax-showcase-bg__panels {
+  position: absolute;
+  inset: 0;
+}
+
+.parallax-showcase-bg__grid {
+  inset: -14% -10%;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(125, 249, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 122, 217, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  transform: perspective(1600px) rotateX(77deg) scale(1.1);
+  transform-origin: center bottom;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 78%);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 78%);
+}
+
+.parallax-showcase-bg__beam {
+  inset: auto;
+  width: 48rem;
+  height: 16rem;
+  border-radius: 999px;
+  filter: blur(50px);
+  opacity: 0.24;
+}
+
+.parallax-showcase-bg__beam--one {
+  top: 6%;
+  left: -8%;
+  background: linear-gradient(90deg, rgba(125, 249, 255, 0), rgba(125, 249, 255, 0.42), rgba(255, 255, 255, 0));
+  transform: rotate(-16deg);
+}
+
+.parallax-showcase-bg__beam--two {
+  right: -12%;
+  bottom: 10%;
+  background: linear-gradient(90deg, rgba(255, 122, 217, 0), rgba(255, 122, 217, 0.34), rgba(125, 249, 255, 0));
+  transform: rotate(18deg);
+}
+
+.parallax-showcase-bg__goo {
+  inset: -12%;
+  opacity: 0.95;
+  mix-blend-mode: screen;
+}
+
+.parallax-showcase-bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.72;
+  will-change: transform;
+}
+
+.parallax-showcase-bg__blob--one {
+  top: 10%;
+  left: 10%;
+  width: 26rem;
+  height: 26rem;
+  background: radial-gradient(circle at 35% 32%, rgba(255, 255, 255, 0.85), rgba(125, 249, 255, 0.48) 24%, rgba(125, 249, 255, 0.04) 68%);
+}
+
+.parallax-showcase-bg__blob--two {
+  top: 20%;
+  right: 12%;
+  width: 22rem;
+  height: 22rem;
+  background: radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.78), rgba(255, 122, 217, 0.46) 28%, rgba(255, 122, 217, 0.04) 70%);
+}
+
+.parallax-showcase-bg__blob--three {
+  bottom: 8%;
+  left: 22%;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle at 38% 38%, rgba(255, 255, 255, 0.68), rgba(127, 147, 255, 0.4) 26%, rgba(127, 147, 255, 0.04) 70%);
+}
+
+.parallax-showcase-bg__blob--four {
+  bottom: 12%;
+  right: 18%;
+  width: 18rem;
+  height: 18rem;
+  background: radial-gradient(circle at 40% 36%, rgba(255, 255, 255, 0.76), rgba(96, 241, 201, 0.36) 26%, rgba(96, 241, 201, 0.04) 70%);
+}
+
+.parallax-showcase-bg__blob--pointer {
+  top: 50%;
+  left: 50%;
+  width: 26rem;
+  height: 26rem;
+  margin: -13rem 0 0 -13rem;
+  background: radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.92), rgba(125, 249, 255, 0.48) 26%, rgba(255, 122, 217, 0.08) 56%, rgba(125, 249, 255, 0) 74%);
+  opacity: 0.84;
+}
+
+.parallax-showcase-bg__noise {
+  opacity: 0.08;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.14) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  mix-blend-mode: soft-light;
+}
+
+.parallax-showcase-bg__ring {
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.parallax-showcase-bg__ring--outer {
+  width: 34rem;
+  height: 34rem;
+  margin: -17rem 0 0 -17rem;
+  border: 1px solid rgba(125, 249, 255, 0.16);
+  box-shadow:
+    inset 0 0 40px rgba(125, 249, 255, 0.05),
+    0 0 80px rgba(125, 249, 255, 0.06);
+}
+
+.parallax-showcase-bg__ring--inner {
+  width: 18rem;
+  height: 18rem;
+  margin: -9rem 0 0 -9rem;
+  border: 1px solid rgba(255, 122, 217, 0.18);
+  box-shadow:
+    inset 0 0 32px rgba(255, 122, 217, 0.06),
+    0 0 50px rgba(255, 122, 217, 0.08);
+}
+
+.parallax-showcase-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 26px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(7, 12, 24, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  overflow: hidden;
+  will-change: transform;
+}
+
+.parallax-showcase-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(125, 249, 255, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 42%);
+  pointer-events: none;
+}
+
+.parallax-showcase-panel--alpha {
+  top: 12%;
+  left: 8%;
+  width: 22rem;
+}
+
+.parallax-showcase-panel--beta {
+  top: 18%;
+  right: 7%;
+  width: 20rem;
+}
+
+.parallax-showcase-panel--gamma {
+  bottom: 14%;
+  left: 14%;
+  width: 18rem;
+}
+
+.parallax-showcase-panel--delta {
+  right: 18%;
+  bottom: 18%;
+  width: 14rem;
+}
+
+.parallax-showcase-panel__eyebrow {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(125, 249, 255, 0.9);
+}
+
+.parallax-showcase-panel__title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: rgba(244, 251, 255, 0.96);
+}
+
+.parallax-showcase-panel__lines {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.parallax-showcase-panel__lines span {
+  display: block;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(125, 249, 255, 0.42), rgba(255, 122, 217, 0.12));
+}
+
+.parallax-showcase-panel__pills {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.parallax-showcase-panel__pills span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 251, 255, 0.88);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.parallax-showcase-panel__orbit {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at center, rgba(125, 249, 255, 0.2), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  overflow: hidden;
+}
+
+.parallax-showcase-panel__orbit-ring {
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 249, 255, 0.18);
+}
+
+.parallax-showcase-panel__orbit-ring--inner {
+  inset: 30%;
+  border-color: rgba(255, 122, 217, 0.18);
+}
+
+.parallax-showcase-panel__orbit-node {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(125, 249, 255, 0.98), rgba(255, 122, 217, 0.82));
+  box-shadow: 0 0 18px rgba(125, 249, 255, 0.28);
+}
+
+.parallax-showcase-panel__orbit-node--one {
+  top: 22%;
+  left: 62%;
+}
+
+.parallax-showcase-panel__orbit-node--two {
+  bottom: 24%;
+  left: 28%;
+}
+
+.parallax-showcase-panel__orbit-node--three {
+  top: 48%;
+  right: 22%;
+}
+
+.parallax-showcase-panel__bars {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  height: 110px;
+  padding-top: 10px;
+}
+
+.parallax-showcase-panel__bars span {
+  flex: 1;
+  border-radius: 14px 14px 4px 4px;
+  background: linear-gradient(180deg, rgba(125, 249, 255, 0.88), rgba(255, 122, 217, 0.18));
+  box-shadow: 0 12px 28px rgba(125, 249, 255, 0.14);
 }
 
 .section {
@@ -1542,6 +1896,28 @@ button {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+@media (max-width: 1024px) {
+  .parallax-showcase-panel--alpha {
+    left: 4%;
+    width: 18rem;
+  }
+
+  .parallax-showcase-panel--beta {
+    right: 4%;
+    width: 17rem;
+  }
+
+  .parallax-showcase-panel--gamma {
+    left: 8%;
+    width: 16rem;
+  }
+
+  .parallax-showcase-panel--delta {
+    right: 10%;
+    width: 12rem;
+  }
+}
+
 @media (max-width: 768px) {
   .glass-shield {
     padding: 32px 20px;
@@ -1568,6 +1944,56 @@ button {
 
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  .parallax-showcase-bg__grid {
+    opacity: 0.14;
+    background-size: 54px 54px;
+  }
+
+  .parallax-showcase-bg__beam {
+    width: 30rem;
+    height: 11rem;
+    opacity: 0.18;
+  }
+
+  .parallax-showcase-bg__ring--outer {
+    width: 26rem;
+    height: 26rem;
+    margin: -13rem 0 0 -13rem;
+  }
+
+  .parallax-showcase-bg__ring--inner {
+    width: 14rem;
+    height: 14rem;
+    margin: -7rem 0 0 -7rem;
+  }
+
+  .parallax-showcase-panel {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .parallax-showcase-panel--alpha {
+    top: 10%;
+    left: -2%;
+    width: 15rem;
+  }
+
+  .parallax-showcase-panel--beta {
+    top: 20%;
+    right: -4%;
+    width: 14rem;
+  }
+
+  .parallax-showcase-panel--gamma {
+    bottom: 12%;
+    left: -2%;
+    width: 13.5rem;
+  }
+
+  .parallax-showcase-panel--delta {
+    display: none;
   }
 
   .experience-parallax-card {
@@ -1642,6 +2068,68 @@ button {
   .glass-shield {
     padding: 24px 16px;
     border-radius: 14px;
+  }
+
+  .parallax-showcase-bg__blob--one {
+    width: 18rem;
+    height: 18rem;
+    left: 4%;
+  }
+
+  .parallax-showcase-bg__blob--two {
+    width: 16rem;
+    height: 16rem;
+    right: 2%;
+  }
+
+  .parallax-showcase-bg__blob--three,
+  .parallax-showcase-bg__blob--four {
+    width: 14rem;
+    height: 14rem;
+  }
+
+  .parallax-showcase-bg__blob--pointer {
+    width: 18rem;
+    height: 18rem;
+    margin: -9rem 0 0 -9rem;
+  }
+
+  .parallax-showcase-bg__ring--outer {
+    width: 20rem;
+    height: 20rem;
+    margin: -10rem 0 0 -10rem;
+  }
+
+  .parallax-showcase-bg__ring--inner {
+    width: 11rem;
+    height: 11rem;
+    margin: -5.5rem 0 0 -5.5rem;
+  }
+
+  .parallax-showcase-panel {
+    padding: 14px;
+  }
+
+  .parallax-showcase-panel__title {
+    font-size: 0.88rem;
+  }
+
+  .parallax-showcase-panel--alpha {
+    top: 10%;
+    left: -10%;
+    width: 12rem;
+  }
+
+  .parallax-showcase-panel--beta {
+    top: 24%;
+    right: -10%;
+    width: 11rem;
+  }
+
+  .parallax-showcase-panel--gamma {
+    bottom: 14%;
+    left: -8%;
+    width: 11rem;
   }
 
   .experience-parallax-card {
