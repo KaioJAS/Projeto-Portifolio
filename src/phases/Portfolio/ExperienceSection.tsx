@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion'
 import { GlassShield } from '@/canvas/GlassShield'
+import { motion } from 'framer-motion'
+import { ExperienceParallaxCard, type ExperienceCardData } from './ExperienceParallaxCard'
 
-const experiences = [
+const experiences: ExperienceCardData[] = [
   {
     company: 'Runyme',
     role: 'Desenvolvedor Full Stack',
@@ -9,7 +10,12 @@ const experiences = [
     description:
       'Desenvolvimento e evolução de plataforma SaaS contábil utilizando Laravel e Vue.js. Implementação de simulador de regimes tributários, otimização de performance e colaboração na modelagem de soluções escaláveis e orientadas a negócio.',
     tech: ['Laravel', 'Vue.js', 'PHP', 'JavaScript', 'SaaS'],
-    emoji: 'pi pi-building',
+    focus: 'Ecossistema contábil',
+    highlights: ['Calculadora fiscal', 'Planilhas inteligentes', 'Fluxo SaaS'],
+    scene: 'runyme',
+    accent: '#d6a35c',
+    accentRgb: '214, 163, 92',
+    secondary: '#9be3b2',
   },
   {
     company: 'Certik Web',
@@ -18,7 +24,12 @@ const experiences = [
     description:
       'Implementação de funcionalidades e melhorias estruturais para sistemas web com Laravel e Vue.js. Refatoração de escopos visando desempenho, e integração entre frontend e backend comunicando via APIs.',
     tech: ['PHP', 'Laravel', 'Vue.js', 'APIs'],
-    emoji: 'pi pi-code',
+    focus: 'Design + tecnologia',
+    highlights: ['Notebook criativo', 'Interface visual', 'Código aplicado'],
+    scene: 'certik',
+    accent: '#79d2ff',
+    accentRgb: '121, 210, 255',
+    secondary: '#f77fd0',
   },
   {
     company: 'H3X',
@@ -27,14 +38,19 @@ const experiences = [
     description:
       'Desenvolvimento de sites institucionais, e-commerces e sistemas web personalizados. Foco em arquitetura MVC e suporte técnico de projetos existentes.',
     tech: ['PHP', 'CodeIgniter', 'HTML/CSS', 'JavaScript'],
-    emoji: 'pi pi-desktop',
+    focus: 'Linha corporativa',
+    highlights: ['Sites institucionais', 'Estrutura MVC', 'Entrega corporativa'],
+    scene: 'h3x',
+    accent: '#a8bed6',
+    accentRgb: '168, 190, 214',
+    secondary: '#f0c67a',
   },
 ]
 
 export function ExperienceSection() {
   return (
     <section id="experience" className="section experience-section">
-      <GlassShield>
+      <GlassShield className="experience-shield">
         <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 40 }}
@@ -49,36 +65,9 @@ export function ExperienceSection() {
           </p>
         </motion.div>
 
-        <div className="experience-timeline">
-          <div className="timeline-line" />
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.company}
-              className="experience-card"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: index * 0.15 }}
-            >
-              <div className="timeline-dot">
-                <i className={exp.emoji}></i>
-              </div>
-              <div className="card-content">
-                <div className="card-header">
-                  <span className="card-period">{exp.period}</span>
-                  <h3 className="card-company">{exp.company}</h3>
-                  <span className="card-role">{exp.role}</span>
-                </div>
-                <p className="card-description">{exp.description}</p>
-                <div className="card-tech">
-                  {exp.tech.map((t) => (
-                    <span key={t} className="tech-tag">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+        <div className="experience-showcase">
+          {experiences.map((experience, index) => (
+            <ExperienceParallaxCard key={experience.company} experience={experience} index={index} />
           ))}
         </div>
       </GlassShield>
