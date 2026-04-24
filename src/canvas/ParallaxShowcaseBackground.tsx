@@ -23,6 +23,9 @@ interface PointerLayerProps {
   children?: ReactNode
 }
 
+const PARALLAX_CALC_KEYS = ['7', '8', '9', '%', '4', '5', '6', 'x', '1', '2', '3', '-', '0', '.', '=', '+']
+const PARALLAX_CHART_BARS = [44, 72, 58, 84, 67]
+
 function PointerLayer({
   className,
   pointerX,
@@ -263,17 +266,16 @@ export function ParallaxShowcaseBackground() {
           rotate={5}
           reducedMotion={reducedMotion}
         >
-          <span className="parallax-showcase-panel__eyebrow">Fluid Field</span>
-          <strong className="parallax-showcase-panel__title">Interactive light reacting in real time</strong>
-          <div className="parallax-showcase-panel__lines">
-            <span style={{ width: '82%' }} />
-            <span style={{ width: '58%' }} />
-            <span style={{ width: '72%' }} />
-          </div>
+          <span className="parallax-showcase-panel__eyebrow">Paralax em scroll</span>
+          <strong className="parallax-showcase-panel__title">Camadas vivas com profundidade, dados e leitura visual</strong>
+          <p className="parallax-showcase-panel__copy">
+            Mantive o fundo fluido, mas deixei o showcase mais útil e profissional: menos painel abstrato,
+            mais calculadora, gráfico e sensação de sistema em movimento.
+          </p>
           <div className="parallax-showcase-panel__pills">
-            <span>Mouse</span>
-            <span>Glow</span>
-            <span>Liquid</span>
+            <span>Scroll</span>
+            <span>Dados</span>
+            <span>Profundidade</span>
           </div>
         </PointerLayer>
       </motion.div>
@@ -288,14 +290,36 @@ export function ParallaxShowcaseBackground() {
           rotate={8}
           reducedMotion={reducedMotion}
         >
-          <span className="parallax-showcase-panel__eyebrow">Reactive Depth</span>
-          <strong className="parallax-showcase-panel__title">Glass layers, orbiting nodes and cinematic depth</strong>
-          <div className="parallax-showcase-panel__orbit">
-            <span className="parallax-showcase-panel__orbit-ring" />
-            <span className="parallax-showcase-panel__orbit-ring parallax-showcase-panel__orbit-ring--inner" />
-            <span className="parallax-showcase-panel__orbit-node parallax-showcase-panel__orbit-node--one" />
-            <span className="parallax-showcase-panel__orbit-node parallax-showcase-panel__orbit-node--two" />
-            <span className="parallax-showcase-panel__orbit-node parallax-showcase-panel__orbit-node--three" />
+          <span className="parallax-showcase-panel__eyebrow">Simulacao viva</span>
+          <strong className="parallax-showcase-panel__title">Calculadora dinâmica com foco em decisão</strong>
+          <div className="parallax-showcase-panel__calc-display">
+            <span>Melhor cenário</span>
+            <strong>R$ 184.320</strong>
+            <small>Aliquota efetiva 13,7%</small>
+          </div>
+          <div className="parallax-showcase-panel__calc-grid">
+            {PARALLAX_CALC_KEYS.map((key, index) => (
+              <motion.span
+                key={key}
+                className={`parallax-showcase-panel__calc-key ${key === '=' ? 'parallax-showcase-panel__calc-key--accent' : ''}`}
+                animate={
+                  reducedMotion
+                    ? undefined
+                    : {
+                        y: key === '=' ? [0, -2, 0] : [0, -1, 0],
+                        opacity: [0.72, 1, 0.72],
+                      }
+                }
+                transition={{
+                  duration: key === '=' ? 1.8 : 2.6,
+                  delay: index * 0.05,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                {key}
+              </motion.span>
+            ))}
           </div>
         </PointerLayer>
       </motion.div>
@@ -310,13 +334,58 @@ export function ParallaxShowcaseBackground() {
           rotate={-6}
           reducedMotion={reducedMotion}
         >
-          <span className="parallax-showcase-panel__eyebrow">Motion System</span>
-          <strong className="parallax-showcase-panel__title">Parallax stacks with premium motion rig</strong>
-          <div className="parallax-showcase-panel__bars">
-            <span style={{ height: '72%' }} />
-            <span style={{ height: '46%' }} />
-            <span style={{ height: '88%' }} />
-            <span style={{ height: '58%' }} />
+          <span className="parallax-showcase-panel__eyebrow">Leitura de dados</span>
+          <strong className="parallax-showcase-panel__title">Gráfico pulsando com a página</strong>
+          <div className="parallax-showcase-panel__chart-shell">
+            <div className="parallax-showcase-panel__chart-bars">
+              {PARALLAX_CHART_BARS.map((height, index) => (
+                <motion.span
+                  key={`${height}-${index}`}
+                  animate={
+                    reducedMotion
+                      ? { height: `${height}%` }
+                      : {
+                          height: [`${Math.max(24, height - 14)}%`, `${height}%`, `${Math.max(18, height - 8)}%`],
+                        }
+                  }
+                  transition={{
+                    duration: 3.4,
+                    delay: index * 0.14,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              ))}
+            </div>
+
+            <svg className="parallax-showcase-panel__chart-line" viewBox="0 0 240 120" preserveAspectRatio="none">
+              <path d="M 12 96 L 228 96" className="parallax-showcase-panel__chart-axis" />
+              <motion.path
+                d="M 18 86 C 52 74, 76 58, 106 64 S 160 30, 222 18"
+                fill="none"
+                stroke="rgba(244, 251, 255, 0.92)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={reducedMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0.45 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.6, ease: 'easeOut', delay: 0.2 }}
+              />
+              {[['18', '86'], ['106', '64'], ['222', '18']].map(([cx, cy]) => (
+                <circle
+                  key={`${cx}-${cy}`}
+                  cx={cx}
+                  cy={cy}
+                  r="4.5"
+                  fill="rgba(125, 249, 255, 0.95)"
+                />
+              ))}
+            </svg>
+          </div>
+          <div className="parallax-showcase-panel__pills">
+            <span>Receita</span>
+            <span>Escala</span>
+            <span>Conversao</span>
           </div>
         </PointerLayer>
       </motion.div>
@@ -331,8 +400,28 @@ export function ParallaxShowcaseBackground() {
           rotate={4}
           reducedMotion={reducedMotion}
         >
-          <span className="parallax-showcase-panel__eyebrow">Showcase</span>
-          <strong className="parallax-showcase-panel__title">High-end background for premium portfolio moments</strong>
+          <span className="parallax-showcase-panel__eyebrow">Indicadores</span>
+          <strong className="parallax-showcase-panel__title">Sinais do sistema</strong>
+          <div className="parallax-showcase-panel__metrics">
+            <motion.span
+              animate={reducedMotion ? undefined : { opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              +24%
+            </motion.span>
+            <motion.span
+              animate={reducedMotion ? undefined : { opacity: [1, 0.55, 1] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+            >
+              3,1x
+            </motion.span>
+            <motion.span
+              animate={reducedMotion ? undefined : { opacity: [0.65, 1, 0.65] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+            >
+              12ms
+            </motion.span>
+          </div>
         </PointerLayer>
       </motion.div>
     </div>
