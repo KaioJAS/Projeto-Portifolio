@@ -1983,6 +1983,41 @@ button {
   transform: translateX(-4px);
 }
 
+.scroll-controls-float {
+  position: fixed;
+  right: 24px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+
+.scroll-float-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-float-btn:hover {
+  background: rgba(var(--experience-accent-rgb, 108, 92, 231), 0.2);
+  border-color: rgba(var(--experience-accent-rgb, 108, 92, 231), 0.4);
+  color: var(--experience-accent, #6c5ce7);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 .portfolio-nav {
   position: fixed;
   right: 24px;
@@ -2247,6 +2282,18 @@ button {
     font-size: 0.82rem;
   }
 
+  .scroll-controls-float {
+    bottom: 24px;
+    right: 16px;
+    gap: 8px;
+  }
+
+  .scroll-float-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
   .portfolio-nav {
     display: none;
   }
@@ -2435,5 +2482,15 @@ button {
   .back-to-splash-btn {
     top: 12px;
     left: 12px;
+  }
+
+  .scroll-controls-float {
+    right: 12px;
+    bottom: 20px;
+  }
+
+  .scroll-float-btn {
+    width: 34px;
+    height: 34px;
   }
 }

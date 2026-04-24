@@ -95,10 +95,10 @@ export function ParallaxShowcaseBackground() {
   const ringShiftY = useTransform(pointerY, [0, 1], [-ringTravelY, ringTravelY])
   const gridShiftX = useTransform(pointerX, [0, 1], [-gridTravelX, gridTravelX])
   const gridShiftY = useTransform(pointerY, [0, 1], [-gridTravelY, gridTravelY])
-  const driftSlow = useTransform(scrollYProgress, [0, 1], [0, -120 * motionScale])
-  const driftMedium = useTransform(scrollYProgress, [0, 1], [0, -180 * motionScale])
-  const driftFast = useTransform(scrollYProgress, [0, 1], [0, -240 * motionScale])
-  const driftReverse = useTransform(scrollYProgress, [0, 1], [0, 160 * motionScale])
+  const driftSlow = useTransform(scrollYProgress, [0, 1], [150 * motionScale, -450 * motionScale])
+  const driftMedium = useTransform(scrollYProgress, [0, 1], [250 * motionScale, -750 * motionScale])
+  const driftFast = useTransform(scrollYProgress, [0, 1], [350 * motionScale, -1000 * motionScale])
+  const driftReverse = useTransform(scrollYProgress, [0, 1], [-200 * motionScale, 600 * motionScale])
 
   useEffect(() => {
     const updateViewport = () => {
@@ -265,17 +265,38 @@ export function ParallaxShowcaseBackground() {
           depthY={14}
           rotate={5}
           reducedMotion={reducedMotion}
+          style={{ opacity: 0.9, filter: 'blur(3px)' }}
         >
-          <span className="parallax-showcase-panel__eyebrow">Paralax em scroll</span>
-          <strong className="parallax-showcase-panel__title">Camadas vivas com profundidade, dados e leitura visual</strong>
-          <p className="parallax-showcase-panel__copy">
-            Mantive o fundo fluido, mas deixei o showcase mais útil e profissional: menos painel abstrato,
-            mais calculadora, gráfico e sensação de sistema em movimento.
-          </p>
-          <div className="parallax-showcase-panel__pills">
-            <span>Scroll</span>
-            <span>Dados</span>
-            <span>Profundidade</span>
+          <div className="parallax-showcase-panel__lines">
+            <span style={{ width: '80%' }} />
+            <span style={{ width: '60%' }} />
+            <span style={{ width: '90%' }} />
+            <span style={{ width: '40%' }} />
+          </div>
+
+          {/* Gráfico Adicionado Mais Abaixo no Card Alpha */}
+          <div className="parallax-showcase-panel__chart-shell" style={{ marginTop: '16px', transform: 'scale(0.99)', transformOrigin: 'left center' }}>
+            <div className="parallax-showcase-panel__chart-bars">
+              {PARALLAX_CHART_BARS.map((height, index) => (
+                <motion.span
+                  key={`alpha-bar-${height}-${index}`}
+                  animate={
+                    reducedMotion
+                      ? { height: `${height}%` }
+                      : { height: [`${Math.max(24, height - 14)}%`, `${height}%`, `${Math.max(18, height - 8)}%`] }
+                  }
+                  transition={{ duration: 3.4, delay: index * 0.14, repeat: Infinity, ease: 'easeInOut' }}
+                />
+              ))}
+            </div>
+            <svg className="parallax-showcase-panel__chart-line" viewBox="0 0 240 120" preserveAspectRatio="none" style={{ marginTop: '-40px' }}>
+              <motion.path
+                d="M 18 86 C 52 74, 76 58, 106 64 S 160 30, 222 18"
+                fill="none" stroke="rgba(244, 251, 255, 0.92)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0.45 }} animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.6, ease: 'easeOut', delay: 0.2 }}
+              />
+            </svg>
           </div>
         </PointerLayer>
       </motion.div>
@@ -289,13 +310,10 @@ export function ParallaxShowcaseBackground() {
           depthY={20}
           rotate={8}
           reducedMotion={reducedMotion}
+          style={{ opacity: 0.85, filter: 'blur(2px)' }}
         >
-          <span className="parallax-showcase-panel__eyebrow">Simulacao viva</span>
-          <strong className="parallax-showcase-panel__title">Calculadora dinâmica com foco em decisão</strong>
-          <div className="parallax-showcase-panel__calc-display">
-            <span>Melhor cenário</span>
-            <strong>R$ 184.320</strong>
-            <small>Aliquota efetiva 13,7%</small>
+          <div className="parallax-showcase-panel__calc-display" style={{ marginBottom: "12px", border: "none", background: "transparent", padding: 0 }}>
+            <strong style={{ fontSize: "1.2rem", color: "rgba(125, 249, 255, 0.8)", margin: "0 auto" }}>R$ 184.320</strong>
           </div>
           <div className="parallax-showcase-panel__calc-grid">
             {PARALLAX_CALC_KEYS.map((key, index) => (
@@ -306,9 +324,9 @@ export function ParallaxShowcaseBackground() {
                   reducedMotion
                     ? undefined
                     : {
-                        y: key === '=' ? [0, -2, 0] : [0, -1, 0],
-                        opacity: [0.72, 1, 0.72],
-                      }
+                      y: key === '=' ? [0, -2, 0] : [0, -1, 0],
+                      opacity: [0.72, 1, 0.72],
+                    }
                 }
                 transition={{
                   duration: key === '=' ? 1.8 : 2.6,
@@ -333,9 +351,8 @@ export function ParallaxShowcaseBackground() {
           depthY={18}
           rotate={-6}
           reducedMotion={reducedMotion}
+          style={{ opacity: 0.8, filter: 'blur(3px)' }}
         >
-          <span className="parallax-showcase-panel__eyebrow">Leitura de dados</span>
-          <strong className="parallax-showcase-panel__title">Gráfico pulsando com a página</strong>
           <div className="parallax-showcase-panel__chart-shell">
             <div className="parallax-showcase-panel__chart-bars">
               {PARALLAX_CHART_BARS.map((height, index) => (
@@ -345,8 +362,8 @@ export function ParallaxShowcaseBackground() {
                     reducedMotion
                       ? { height: `${height}%` }
                       : {
-                          height: [`${Math.max(24, height - 14)}%`, `${height}%`, `${Math.max(18, height - 8)}%`],
-                        }
+                        height: [`${Math.max(24, height - 14)}%`, `${height}%`, `${Math.max(18, height - 8)}%`],
+                      }
                   }
                   transition={{
                     duration: 3.4,
@@ -399,9 +416,8 @@ export function ParallaxShowcaseBackground() {
           depthY={12}
           rotate={4}
           reducedMotion={reducedMotion}
+          style={{ opacity: 0.85, filter: 'blur(4px)' }}
         >
-          <span className="parallax-showcase-panel__eyebrow">Indicadores</span>
-          <strong className="parallax-showcase-panel__title">Sinais do sistema</strong>
           <div className="parallax-showcase-panel__metrics">
             <motion.span
               animate={reducedMotion ? undefined : { opacity: [0.6, 1, 0.6] }}
